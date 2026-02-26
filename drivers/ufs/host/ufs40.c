@@ -37,8 +37,6 @@ static int ufs40_vops_init(struct ufs_hba *hba)
 	hba->caps |= UFSHCD_CAP_CLK_SCALING | UFSHCD_CAP_WB_WITH_CLK_SCALING;
 	hba->caps |= UFSHCD_CAP_AUTO_BKOPS_SUSPEND;
 
-    ufshcd_mcq_enable(hba);
-
 	return 0;
 }
 
