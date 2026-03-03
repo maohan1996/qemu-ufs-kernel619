@@ -402,7 +402,7 @@ static inline void ufshcd_inc_sq_tail(struct ufs_hw_queue *q)
 
 static inline void ufshcd_mcq_update_cq_tail_slot(struct ufs_hw_queue *q)
 {
-	u32 val = readl(q->mcq_cq_tail);
+	u32 val = readl(q->mcq_cq_tail);//host ctrl把一个CQ更新到CQ的尾指针，然后CQTP会往后挪一个CQ entry的位置
 
 	q->cq_tail_slot = val / sizeof(struct cq_entry);
 }

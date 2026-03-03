@@ -10,15 +10,20 @@ fi
 # 提取参数并清洗（去空格、转数字，避免非法字符）
 param=$(echo "$1" | xargs)  # 去首尾空格
 
-if [ "${param}" == "cfg" ]; then
-    make  O=/home/maohan/linux/qemu/kernel/buildout vexpress_defconfig
+if [ "${param}" == "c" ]; then
+    make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=/home/maohan/linux/qemu/kernel/buildout vexpress_defconfig
 
-elif [ "${param}" == "bd" ]; then
-    make  O=/home/maohan/linux/qemu/kernel/buildout -j16
+elif [ "${param}" == "b" ]; then
+    make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=/home/maohan/linux/qemu/kernel/buildout -j16
 
-elif [ "${param}" == "dtb" ]; then
-    make  O=/home/maohan/linux/qemu/kernel/buildout dtbs -j16 
+elif [ "${param}" == "d" ]; then
+    make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=/home/maohan/linux/qemu/kernel/buildout dtbs -j16 
 
+elif [ "${param}" == "ac" ]; then
+    make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- O=/home/maohan/linux/qemu/kernel/arm64_buildout defconfig
+
+elif [ "${param}" == "ab" ]; then
+    make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- O=/home/maohan/linux/qemu/kernel/arm64_buildout -j16
 else
     echo "❌ 错误：参数仅支持[cfg|bd|dtb]，你输入了${param}！"
     exit 1
