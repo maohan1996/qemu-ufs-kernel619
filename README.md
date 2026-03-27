@@ -2,7 +2,7 @@
 
 如果使用的是arm64的virt启动，需要用dts文件的话（因为默认编译是没有给出现成的dts）需要启动时候导出dtb，然后反编译出dts再编译成dtb：
 1、导出dtb：
-    qemu-system-aarch64 \
+    ./qemu-system-aarch64 \
     -M virt,dumpdtb=virto.dtb \ ====>这一行的dumpdtb是导出dtb的命令
     -cpu cortex-a72 \
     -smp 4 \
