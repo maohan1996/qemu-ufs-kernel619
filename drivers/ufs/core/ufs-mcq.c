@@ -209,7 +209,10 @@ static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
 		rem -= hba->nr_queues[HCTX_TYPE_READ];
 	}
 
-	if (!hba->nr_queues[HCTX_TYPE_DEFAULT])//hba->nr_queues[HCTX_TYPE_DEFAULT]=1 , so no run
+	//此时为hba->nr_queues[HCTX_TYPE_DEFAULT]=0，min3是取最小值，由于mcq_capabilities设计成1
+	//即便core数量多，hba->nr_queues[HCTX_TYPE_DEFAULT]也为rem
+	//这样是为了防止后面分配队列内存地址时超过MCQ的SQCQ承受数量
+	if (!hba->nr_queues[HCTX_TYPE_DEFAULT])
 		hba->nr_queues[HCTX_TYPE_DEFAULT] = min3(rem, rw_queues,
 							 num_possible_cpus());
 
