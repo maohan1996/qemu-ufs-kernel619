@@ -6,8 +6,8 @@
  * Author: han mao <han.mao@unisoc.com>
  */
 
-#ifndef _UFS40_H_
-#define _UFS40_H_
+#ifndef _UFS_QEMU_H_
+#define _UFS_QEMU_H_
 
 #include <linux/arm-smccc.h>
 #include <linux/bitfield.h>
@@ -27,9 +27,9 @@
 #include <ufs/ufs_quirks.h>
 #include <ufs/unipro.h>
 
-struct ufs40_host {
+struct ufs_qemu_host {
 	struct ufs_hba *hba;
-	struct ufs40_priv *priv;
+	struct ufs_qemu_priv *priv;
 	void __iomem *ufs_dbg_mmio;
 };
 

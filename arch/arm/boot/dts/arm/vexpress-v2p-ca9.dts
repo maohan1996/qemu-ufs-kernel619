@@ -85,8 +85,8 @@
 		};
 	};
 
-	ufs40: ufs40@22000000 {
-		compatible = "ufshcd-ufs40";
+	ufs: ufs@22000000 {
+		compatible = "ufs-qemu";
 		reg = <0x22000000 0x2000>;
 		interrupts = <0 53 1>;
 	};

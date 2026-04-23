@@ -24,12 +24,12 @@
 #include <ufs/ufs_quirks.h>
 #include <ufs/unipro.h>
 
-static void ufs40_remove(struct platform_device *pdev)
+static void ufs_qemu_remove(struct platform_device *pdev)
 {
 	ufshcd_pltfrm_remove(pdev);
 }
 
-static int ufs40_vops_init(struct ufs_hba *hba)
+static int ufs_qemu_vops_init(struct ufs_hba *hba)
 {
 	struct device *dev = hba->dev;
 
@@ -71,28 +71,28 @@ static int ufs_qemu_op_runtime_config(struct ufs_hba *hba)
 	return 0;
 }
 
-static const struct ufs_hba_variant_ops ufs40_hba_vops = {
-	.name = "qemu_ufs40",
-	.init = ufs40_vops_init,
+static const struct ufs_hba_variant_ops ufs_qemu_hba_vops = {
+	.name = "ufs-qemu",
+	.init = ufs_qemu_vops_init,
 	.mcq_config_resource	= ufs_qemu_mcq_config_resource,
 	.op_runtime_config	= ufs_qemu_op_runtime_config,
 	// .device_reset = ufs_rockchip_device_reset,
 };
 
-static const struct of_device_id ufs40_of_match[] = {
-	{ .compatible = "ufshcd-ufs40", .data = &ufs40_hba_vops},
+static const struct of_device_id ufs_qemu_of_match[] = {
+	{ .compatible = "ufs-qemu", .data = &ufs_qemu_hba_vops},
 	{},
 };
 
-static int ufs40_probe(struct platform_device *pdev)
+static int ufs_qemu_probe(struct platform_device *pdev)
 {
 	int err;
 	struct device *dev = &pdev->dev;
 	const struct of_device_id *of_id;
 
-    printk("enter int ufs40 probe!!!!!!!\n\n");
+    printk("enter int ufs_qemu probe!!!!!!!\n\n");
 
-	of_id = of_match_node(ufs40_of_match, dev->of_node);
+	of_id = of_match_node(ufs_qemu_of_match, dev->of_node);
 
 	err = ufshcd_pltfrm_init(pdev, of_id->data);
 	if (err)
@@ -101,16 +101,16 @@ static int ufs40_probe(struct platform_device *pdev)
     return 0;
 }
 
-static struct platform_driver ufs40_pltform = {
+static struct platform_driver ufs_qemu_pltform = {
     .driver = {
-        .name = "ufshcd-ufs40",
-        .of_match_table = ufs40_of_match,
+        .name = "ufs-qemu",
+        .of_match_table = ufs_qemu_of_match,
     },
-    .probe = ufs40_probe,
-    .remove = ufs40_remove,
+    .probe = ufs_qemu_probe,
+    .remove = ufs_qemu_remove,
 };
 
-module_platform_driver(ufs40_pltform);
+module_platform_driver(ufs_qemu_pltform);
 
 MODULE_DESCRIPTION("QEMU UFS Host Driver");
 MODULE_LICENSE("GPL v2");
