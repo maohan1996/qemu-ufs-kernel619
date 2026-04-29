@@ -47,6 +47,14 @@ static int ufs_qemu_mcq_config_resource(struct ufs_hba *hba)
 	return 0;
 }
 
+/*
+ * ufs_qemu_op_runtime_config - configure runtime opr info
+ * this function is use to set ufs operation and runtime register, 
+ * register such as SQDAO, the value written to this register 
+ * should be provided by the IP design engineer in advance.
+ * However, QEMU has already prepared this value in this register 
+ * in advance to facilitate debugging.
+ */
 static int ufs_qemu_op_runtime_config(struct ufs_hba *hba)
 {
 	struct ufshcd_mcq_opr_info_t *opr;
