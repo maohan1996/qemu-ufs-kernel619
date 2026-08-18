@@ -37,5 +37,9 @@
 	--append "noinitrd root=/dev/vda rw nokaslr console=ttyAMA0 loglevel=8" \
 	-drive if=none,file=rootfs.ext3,id=hd0 \
 	-device virtio-blk-device,drive=hd0 \
+	-fsdev local,security_model=passthrough,readonly=off,id=fsdev0,path=/home/maohan/linux/qemu/qemu-boot/share \
+	-device virtio-9p-device,id=fs0,fsdev=fsdev0,mount_tag=hostshare \
+	-drive if=none,id=ufs_disk,file=rootfs_ext4.img,format=raw \
+	-device ufs-lu,drive=ufs_disk,bus=ufs-bus,lun=0 \
 
 
